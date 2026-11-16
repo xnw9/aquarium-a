@@ -5,22 +5,28 @@ original aspect ratio and letterboxed against black, with icon controls bottom-l
 
 Live at **https://xnw9.github.io/aquarium-a/**
 
-## Files
-| | |
-|---|---|
-| `index.html` | Markup — video element and controls |
-| `style.css` | Viewport-fit layout, letterboxing, control styling |
-| `script.js` | Play/pause toggle, stop (pause + rewind), spacebar |
-| `favicon.svg` | Jellyfish tab icon |
-| `assets/ambiance-recode.mp4` | The video — see `assets/README.md` for encoding |
+## What's on the page
+
+The video loops continuously, fading in and out at the seam. Two canvas effects sit
+over it — rising glowy bubbles, and circular bokeh glare in white and `#94ecdd`. Each
+effect runs independently of the video and of the other, with its own play/pause and
+stop buttons. A volume button opens a vertical slider.
+
+Every effect's tuning constants (count, size, speed, opacity, colour ratio) are named
+at the top of its own file.
 
 ## Develop
+
 Open `index.html` directly in a browser. No build step, no dependencies.
 
 Pushing to `main` redeploys the site automatically.
 
-## Later
-`.video-wrap` is `position: relative` and the controls sit inside it, so overlays
-(pomodoro clock, click counter, click targets) can be added in the same stacking
-context without restructuring. Pause/resume is on a button rather than
-click-to-toggle, so it won't collide with interactive clicking.
+## TODO
+
+- **Pomodoro clock** — work/break timer over the video.
+- **Click effect** — something visual on click, e.g. a ripple or burst at the pointer.
+
+`.video-wrap` is `position: relative` and the overlays sit inside it, so these can be
+added in the same stacking context without restructuring. The canvases are
+`pointer-events: none`, and pause/resume is on a button rather than click-to-toggle,
+so neither will swallow the clicks.
