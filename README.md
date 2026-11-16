@@ -8,7 +8,8 @@ Live at **https://xnw9.github.io/aquarium-a/**
 ## What's on the page
 
 The video loops continuously, fading in and out at the seam. Two canvas effects sit
-over it — rising glowy bubbles, and circular bokeh glare in white and `#94ecdd`. Each
+over it — rising glowy bubbles, circular bokeh glare, and ripples where you click, all in
+white and `#94ecdd`. Each
 effect runs independently of the video and of the other, with its own play/pause and
 stop buttons. A volume button opens a vertical slider.
 
@@ -32,9 +33,8 @@ evicted from visitors' caches.
 ## TODO
 
 - **Pomodoro clock** — work/break timer over the video.
-- **Click effect** — something visual on click, e.g. a ripple or burst at the pointer.
 
-`.video-wrap` is `position: relative` and the overlays sit inside it, so these can be
-added in the same stacking context without restructuring. The canvases are
-`pointer-events: none`, and pause/resume is on a button rather than click-to-toggle,
-so neither will swallow the clicks.
+`.video-wrap` is `position: relative` and the overlays sit inside it, so a clock can
+be added in the same stacking context without restructuring. The canvases are
+`pointer-events: none` and the ripple handler ignores anything inside `.controls`,
+so clicks reach whatever they should.
