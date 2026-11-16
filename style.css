@@ -31,8 +31,17 @@ html, body {
   object-fit: contain;
 }
 
+/* Bubble overlay: sized and positioned from JS to match the video rect.
+   pointer-events:none so future click targets underneath still receive clicks. */
+.overlay {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+}
+
 .controls {
   position: absolute;
+  flex-wrap: wrap;
   left: 1rem;
   bottom: 1rem;
   display: flex;
@@ -56,6 +65,15 @@ html, body {
 }
 
 .controls button:hover { background: #000000b3; }
+
+/* Divider and tint mark the bubble controls as a separate group. */
+.controls .sep {
+  width: 1px;
+  margin: 0.4rem 0.25rem;
+  background: #ffffff40;
+}
+
+#bubbleToggle, #bubbleStop { color: #bfe3ff; }
 .controls button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .controls svg {
@@ -67,3 +85,4 @@ html, body {
 /* Only one of the two toggle icons shows at a time. */
 .controls button[data-state="playing"] .i-play,
 .controls button[data-state="paused"] .i-pause { display: none; }
+
