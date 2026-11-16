@@ -30,6 +30,13 @@
     <!-- future overlays (click targets, counters, clock) go inside .video-wrap -->
 
     <div class="controls">
+      <button id="menuToggle" type="button" data-state="closed" aria-expanded="false"
+              aria-controls="controlsGroup" aria-label="Show controls" title="Show controls">
+        <svg class="i-menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+        <svg class="i-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.3 7.1 16.9 5.7 12 10.6 7.1 5.7 5.7 7.1l4.9 4.9-4.9 4.9 1.4 1.4 4.9-4.9 4.9 4.9 1.4-1.4-4.9-4.9z"/></svg>
+      </button>
+
+      <div class="controls-group" id="controlsGroup" hidden>
       <div class="volume" id="volume">
         <button id="volumeBtn" type="button" data-level="high"
                 aria-label="Volume 100%" title="Volume 100%"
@@ -95,6 +102,7 @@
           <path class="half" d="M12 3.6a8.4 8.4 0 0 1 0 16.8z"/>
         </svg>
       </button>
+      </div>
     </div>
   </div>
 
@@ -105,6 +113,7 @@
   <script src="glare.js"></script>
   <script src="ripples.js"></script>
   <script src="filter.js"></script>
+  <script src="menu.js"></script>
 
   <script>
     // Cache the video on disk so repeat visits don't re-stream it.

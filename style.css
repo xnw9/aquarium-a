@@ -48,6 +48,7 @@ html, body {
 
 .controls {
   position: absolute;
+  align-items: center;
   flex-wrap: wrap;
   left: 1rem;
   bottom: 1rem;
@@ -76,7 +77,11 @@ html, body {
 /* Divider and tint mark the bubble controls as a separate group. */
 .controls .sep {
   width: 1px;
-  margin: 0.4rem 0.25rem;
+  /* Explicit height: the span is empty, so with align-items: center it would
+     otherwise collapse to nothing. It used to be stretched by the default
+     align-items: stretch. */
+  height: 1.75rem;
+  margin: 0 0.25rem;
   background: #ffffff40;
 }
 
@@ -84,6 +89,18 @@ html, body {
 #glareToggle, #glareStop  { color: #94ecdd; }
 #rippleToggle { color: #a9e8c4; }
 #filterToggle { color: #f2d9a6; }
+
+/* Everything but the menu button lives in here, so one attribute hides the lot. */
+.controls-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.controls-group[hidden] { display: none; }
+
+#menuToggle[data-state="open"] .i-menu,
+#menuToggle[data-state="closed"] .i-close { display: none; }
 
 /* Concentric rings, drawn as strokes — the blanket fill on .controls svg would
    otherwise turn them into solid discs. */
