@@ -24,6 +24,11 @@ html, body {
 
 /* contain = shrink to fit, never crop, original ratio preserved.
    Uncovered area shows the black wrapper behind. */
+/* Highlight rolloff, toggled from filter.js. Defined on the video rather than
+   as a blend overlay: a darken blend would clip highlights hard, where the SVG
+   tone curve rolls them off smoothly and leaves shadows alone. */
+.video-wrap video.filtered { filter: url(#highlightRolloff); }
+
 .video-wrap video {
   display: block;
   width: 100%;
@@ -78,6 +83,7 @@ html, body {
 #bubbleToggle, #bubbleStop { color: #bfe3ff; }
 #glareToggle, #glareStop  { color: #94ecdd; }
 #rippleToggle { color: #a9e8c4; }
+#filterToggle { color: #f2d9a6; }
 
 /* Concentric rings, drawn as strokes — the blanket fill on .controls svg would
    otherwise turn them into solid discs. */
@@ -89,6 +95,12 @@ html, body {
 .controls .i-ripple-on .dot,
 .controls .i-ripple-off .dot { fill: currentColor; stroke: none; }
 .controls .i-ripple-off { opacity: 0.75; }
+
+/* Contrast glyph: outline ring, with the right half filled when active. */
+.controls .i-filter { fill: none; stroke: currentColor; stroke-width: 1.6; }
+.controls .i-filter .half { fill: currentColor; stroke: none; }
+#filterToggle[data-state="off"] .half { display: none; }
+#filterToggle[data-state="off"] .i-filter { opacity: 0.75; }
 
 #rippleToggle[data-state="playing"] .i-ripple-off,
 #rippleToggle[data-state="paused"]  .i-ripple-on { display: none; }
