@@ -77,6 +77,21 @@ html, body {
 
 #bubbleToggle, #bubbleStop { color: #bfe3ff; }
 #glareToggle, #glareStop  { color: #94ecdd; }
+#rippleToggle { color: #a9e8c4; }
+
+/* Concentric rings, drawn as strokes — the blanket fill on .controls svg would
+   otherwise turn them into solid discs. */
+.controls .i-ripple-on, .controls .i-ripple-off {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+}
+.controls .i-ripple-on .dot,
+.controls .i-ripple-off .dot { fill: currentColor; stroke: none; }
+.controls .i-ripple-off { opacity: 0.75; }
+
+#rippleToggle[data-state="playing"] .i-ripple-off,
+#rippleToggle[data-state="paused"]  .i-ripple-on { display: none; }
 .controls button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .controls svg {

@@ -37,7 +37,9 @@
 
   function rand(min, max) { return min + Math.random() * (max - min); }
 
-  /* opts: { canvas, toggle, stop, count, spawn(p, w, h, scatter, i), step(p, dt, w, h), draw(ctx, p, w, h) } */
+  /* opts: { canvas, toggle, stop, count, spawn(p, w, h, scatter, i),
+              step(p, dt, w, h) -> false to retire, draw(ctx, p, w, h),
+              toggleStops } */
   function create(opts) {
     var canvas  = document.getElementById(opts.canvas);
     var toggle  = document.getElementById(opts.toggle);
@@ -69,6 +71,16 @@
       for (var i = 0; i < opts.count; i++) items.push(opts.spawn({}, w, h, true, i));
     }
 
+    /* Effects with a fixed cast seed once and keep the same particles. Ones
+       driven by events (ripples) declare count 0 and push particles in as they
+       happen; step() returning false retires them. */
+    function add(init) {
+      if (!running) return null;
+      var p = opts.spawn(init || {}, w, h, false, items.length);
+      items.push(p);
+      return p;
+    }
+
     function render() {
       ctx.setTransform(1, 0, 0, 1, 0, 0);   // undo any per-particle rotation
       ctx.clearRect(0, 0, w, h);
@@ -86,7 +98,10 @@
       // teleport when you come back.
       var dt = Math.min((now - last) / 1000, 0.05);
       last = now;
-      for (var i = 0; i < items.length; i++) opts.step(items[i], dt, w, h);
+      // Backwards, so retiring a particle doesn't skip its neighbour.
+      for (var i = items.length - 1; i >= 0; i--) {
+        if (opts.step(items[i], dt, w, h) === false) items.splice(i, 1);
+      }
       render();
       requestAnimationFrame(frame);
     }
@@ -124,7 +139,10 @@
     }
 
     if (toggle)  toggle.addEventListener('click', function () {
-      if (running) pause(); else start();
+      // toggleStops: a single on/off button, where off also clears. Effects
+      // with a separate stop button freeze in place instead.
+      if (running) { if (opts.toggleStops) stop(); else pause(); }
+      else start();
     });
     if (stopBtn) stopBtn.addEventListener('click', stop);
 
@@ -135,7 +153,8 @@
     resize();
     sync();
 
-    return { start: start, pause: pause, stop: stop };
+    return { start: start, pause: pause, stop: stop, add: add,
+             isRunning: function () { return running; } };
   }
 
   window.Overlay = { create: create, rect: videoRect, sprite: makeSprite, rand: rand };

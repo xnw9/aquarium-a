@@ -8,10 +8,12 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <div class="video-wrap" id="videoWrap">
     <video id="player" src="assets/ambiance-recode.mp4" loop playsinline preload="auto"></video>
     <canvas id="bubbles" class="overlay"></canvas>
     <canvas id="glare" class="overlay"></canvas>
+    <canvas id="ripples" class="overlay"></canvas>
     <!-- future overlays (click targets, counters, clock) go inside .video-wrap -->
 
     <div class="controls">
@@ -55,6 +57,21 @@
       <button id="glareStop" type="button" aria-label="Stop glare" title="Stop glare">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg>
       </button>
+
+      <span class="sep" aria-hidden="true"></span>
+
+      <button id="rippleToggle" type="button" data-state="paused"
+              aria-label="Enable click ripples" title="Enable click ripples">
+        <svg class="i-ripple-on" viewBox="0 0 24 24" aria-hidden="true">
+          <circle class="dot" cx="12" cy="12" r="1.7"/>
+          <circle cx="12" cy="12" r="5"/>
+          <circle cx="12" cy="12" r="8.6"/>
+        </svg>
+        <svg class="i-ripple-off" viewBox="0 0 24 24" aria-hidden="true">
+          <circle class="dot" cx="12" cy="12" r="1.7"/>
+          <circle cx="12" cy="12" r="5" stroke-dasharray="2.2 3.2"/>
+        </svg>
+      </button>
     </div>
   </div>
 
@@ -63,6 +80,7 @@
   <script src="overlay.js"></script>
   <script src="bubbles.js"></script>
   <script src="glare.js"></script>
+  <script src="ripples.js"></script>
 
   <script>
     // Cache the video on disk so repeat visits don't re-stream it.
