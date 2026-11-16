@@ -1,11 +1,46 @@
 (function () {
   'use strict';
 
-  var video = document.getElementById('player');
-  var toggle = document.getElementById('toggle');
-  var stop = document.getElementById('stop');
+  var FADE = 1.5;   // seconds to fade in at the start and out at the end of each loop
 
-  // Drives which icon shows (via CSS) and the accessible name.
+  var video  = document.getElementById('player');
+  var toggle = document.getElementById('toggle');
+  var stop   = document.getElementById('stop');
+
+  var fading = false;
+
+  /* ---- loop fade ---------------------------------------------------------
+     The video sits on a black wrapper, so ramping its opacity dips the picture
+     to black at the loop seam and brings it back. Driven by rAF rather than
+     the video's timeupdate event, which only fires ~4x a second and would
+     make the fade visibly steppy. */
+  function opacityAt(t, dur) {
+    if (!dur || !isFinite(dur) || dur < FADE * 2) return 1;
+    if (t < FADE) return t / FADE;                      // fading in
+    if (t > dur - FADE) return (dur - t) / FADE;        // fading out
+    return 1;
+  }
+
+  function applyFade() {
+    var o = opacityAt(video.currentTime, video.duration);
+    video.style.opacity = Math.max(0, Math.min(1, o)).toFixed(3);
+  }
+
+  function fadeLoop() {
+    if (!fading) return;
+    applyFade();
+    requestAnimationFrame(fadeLoop);
+  }
+
+  function startFade() {
+    if (fading) return;
+    fading = true;
+    requestAnimationFrame(fadeLoop);
+  }
+
+  function stopFade() { fading = false; }
+
+  /* ---- playback ---------------------------------------------------------- */
   function sync() {
     var playing = !video.paused;
     toggle.dataset.state = playing ? 'playing' : 'paused';
@@ -27,11 +62,13 @@
   stop.addEventListener('click', function () {
     video.pause();
     video.currentTime = 0;
+    video.style.opacity = '1';   // don't leave a black screen sitting there
   });
 
   // Keep the icon honest regardless of how playback changed.
-  video.addEventListener('play', sync);
-  video.addEventListener('pause', sync);
+  video.addEventListener('play', function () { sync(); startFade(); });
+  video.addEventListener('pause', function () { sync(); stopFade(); });
+  video.addEventListener('loadedmetadata', applyFade);
 
   document.addEventListener('keydown', function (e) {
     if (e.code !== 'Space' && e.key !== ' ') return;
