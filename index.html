@@ -9,7 +9,7 @@
 </head>
 <body>
   <div class="video-wrap" id="videoWrap">
-    <video id="player" src="assets/ambiance-recode.mp4" loop playsinline preload="metadata"></video>
+    <video id="player" src="assets/ambiance-recode.mp4" loop playsinline preload="auto"></video>
     <canvas id="bubbles" class="overlay"></canvas>
     <canvas id="glare" class="overlay"></canvas>
     <!-- future overlays (click targets, counters, clock) go inside .video-wrap -->
@@ -63,5 +63,18 @@
   <script src="overlay.js"></script>
   <script src="bubbles.js"></script>
   <script src="glare.js"></script>
+
+  <script>
+    // Cache the video on disk so repeat visits don't re-stream it.
+    // Needs HTTPS — silently skipped when opening the file from disk.
+    if ('serviceWorker' in navigator) {
+      addEventListener('load', function () {
+        navigator.serviceWorker.register('sw.js').catch(function () {});
+        if (navigator.storage && navigator.storage.persist) {
+          navigator.storage.persist().catch(function () {});
+        }
+      });
+    }
+  </script>
 </body>
 </html>

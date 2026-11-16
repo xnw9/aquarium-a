@@ -21,6 +21,14 @@ Open `index.html` directly in a browser. No build step, no dependencies.
 
 Pushing to `main` redeploys the site automatically.
 
+A service worker (`sw.js`) caches the video on disk, so repeat visits do not
+re-stream 80 MB. It needs HTTPS, so it stays inactive when you open `index.html`
+straight from the filesystem — serve the folder over HTTP to exercise it. Static
+files are network-first, so a redeploy is never masked by a stale cache.
+
+Bump `VERSION` in `sw.js` when the video filename changes, so the old one is
+evicted from visitors' caches.
+
 ## TODO
 
 - **Pomodoro clock** — work/break timer over the video.
