@@ -14,9 +14,14 @@
      to black at the loop seam and brings it back. Driven by rAF rather than
      the video's timeupdate event, which only fires ~4x a second and would
      make the fade visibly steppy. */
+  var fadedInOnce = false;
+
   function opacityAt(t, dur) {
     if (!dur || !isFinite(dur) || dur < FADE * 2) return 1;
-    if (t < FADE) return t / FADE;                      // fading in
+    // The first frame is already on screen behind the landing glass, so the
+    // opening play must not dip to black. Later loops fade in normally.
+    if (t >= FADE) fadedInOnce = true;
+    if (t < FADE) return fadedInOnce ? t / FADE : 1;    // fading in
     if (t > dur - FADE) return (dur - t) / FADE;        // fading out
     return 1;
   }
@@ -68,7 +73,8 @@
   // Keep the icon honest regardless of how playback changed.
   video.addEventListener('play', function () { sync(); startFade(); });
   video.addEventListener('pause', function () { sync(); stopFade(); });
-  video.addEventListener('loadedmetadata', applyFade);
+  // Show the first frame rather than applying the fade's t=0 value.
+  video.addEventListener('loadedmetadata', function () { video.style.opacity = '1'; });
 
   document.addEventListener('keydown', function (e) {
     if (e.code !== 'Space' && e.key !== ' ') return;

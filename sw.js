@@ -4,14 +4,14 @@
    large media early. The Cache API ignores both problems. */
 'use strict';
 
-var VERSION = 'aquarium-a-v2';
+var VERSION = 'aquarium-a-v2.1';
 var VIDEO   = 'assets/ambiance-recode.mp4';
 
 // Small files, precached so the page works offline.
 var SHELL = [
   './', 'index.html', 'style.css', 'script.js',
   'volume.js', 'overlay.js', 'bubbles.js', 'glare.js', 'ripples.js',
-  'filter.js', 'menu.js',
+  'filter.js', 'menu.js', 'landing.js',
   'favicon.svg'
 ];
 

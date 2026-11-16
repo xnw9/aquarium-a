@@ -29,6 +29,12 @@
     <canvas id="ripples" class="overlay"></canvas>
     <!-- future overlays (click targets, counters, clock) go inside .video-wrap -->
 
+    <div class="landing" id="landing">
+      <button id="landingPlay" type="button" aria-label="Play" title="Play">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+    </div>
+
     <div class="controls">
       <button id="menuToggle" type="button" data-state="closed" aria-expanded="false"
               aria-controls="controlsGroup" aria-label="Show controls" title="Show controls">
@@ -114,6 +120,7 @@
   <script src="ripples.js"></script>
   <script src="filter.js"></script>
   <script src="menu.js"></script>
+  <script src="landing.js"></script>
 
   <script>
     // Cache the video on disk so repeat visits don't re-stream it.
