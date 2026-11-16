@@ -11,6 +11,7 @@
   <div class="video-wrap" id="videoWrap">
     <video id="player" src="assets/ambiance-recode.mp4" loop playsinline preload="metadata"></video>
     <canvas id="bubbles" class="overlay"></canvas>
+    <canvas id="glare" class="overlay"></canvas>
     <!-- future overlays (click targets, counters, clock) go inside .video-wrap -->
 
     <div class="controls">
@@ -31,6 +32,12 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg>
       </button>
 
+      <span class="sep" aria-hidden="true"></span>
+
+      <button id="glareToggle" type="button" data-state="paused" aria-label="Play glare" title="Play glare">
+        <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+      </button>
       <button id="glareStop" type="button" aria-label="Stop glare" title="Stop glare">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg>
       </button>
@@ -40,5 +47,6 @@
   <script src="script.js"></script>
   <script src="overlay.js"></script>
   <script src="bubbles.js"></script>
+  <script src="glare.js"></script>
 </body>
 </html>
