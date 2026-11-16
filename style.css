@@ -89,3 +89,46 @@ html, body {
 .controls button[data-state="playing"] .i-play,
 .controls button[data-state="paused"] .i-pause { display: none; }
 
+/* ---- volume ------------------------------------------------------------- */
+.volume { position: relative; display: flex; }
+
+/* Only the icon matching the current level shows. */
+#volumeBtn[data-level="high"] .i-vol-low,
+#volumeBtn[data-level="high"] .i-vol-mute,
+#volumeBtn[data-level="low"]  .i-vol-high,
+#volumeBtn[data-level="low"]  .i-vol-mute,
+#volumeBtn[data-level="mute"] .i-vol-high,
+#volumeBtn[data-level="mute"] .i-vol-low { display: none; }
+
+/* Pops up above the button, matching the button's own backdrop. */
+.volume-panel {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.5rem);
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  padding: 0.75rem 0.5rem;
+  border-radius: 1.25rem;
+  background: #00000080;
+  backdrop-filter: blur(4px);
+}
+
+.volume-panel[hidden] { display: none; }
+
+.volume-slider {
+  /* Standard vertical orientation; the -webkit value is a fallback for
+     browsers predating writing-mode support on range inputs. */
+  writing-mode: vertical-lr;
+  direction: rtl;
+  -webkit-appearance: slider-vertical;
+  appearance: slider-vertical;
+  width: 0.4rem;
+  height: 7rem;
+  margin: 0;
+  accent-color: #bfe3ff;
+  background: transparent;
+  cursor: pointer;
+}
+
+.volume-slider:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }

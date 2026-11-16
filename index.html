@@ -15,6 +15,20 @@
     <!-- future overlays (click targets, counters, clock) go inside .video-wrap -->
 
     <div class="controls">
+      <div class="volume" id="volume">
+        <button id="volumeBtn" type="button" data-level="high"
+                aria-label="Volume 100%" title="Volume 100%"
+                aria-expanded="false" aria-controls="volumePanel">
+          <svg class="i-vol-high" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 5V4L8 9H4zm11.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM13 2.3v2.1c3 .9 5 3.5 5 6.6s-2 5.7-5 6.6v2.1c4.1-.9 7-4.5 7-8.7s-2.9-7.8-7-8.7z"/></svg>
+          <svg class="i-vol-low" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 5V4L8 9H4zm11.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg>
+          <svg class="i-vol-mute" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 5V4L8 9H4zm15.1 3 2.4-2.4-1.1-1.1-2.4 2.4-2.4-2.4-1.1 1.1 2.4 2.4-2.4 2.4 1.1 1.1 2.4-2.4 2.4 2.4 1.1-1.1-2.4-2.4z"/></svg>
+        </button>
+        <div class="volume-panel" id="volumePanel" hidden>
+          <input id="volumeSlider" class="volume-slider" type="range"
+                 min="0" max="1" step="0.01" value="1" aria-label="Volume">
+        </div>
+      </div>
+
       <button id="toggle" type="button" data-state="paused" aria-label="Play" title="Play">
         <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
         <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
@@ -45,6 +59,7 @@
   </div>
 
   <script src="script.js"></script>
+  <script src="volume.js"></script>
   <script src="overlay.js"></script>
   <script src="bubbles.js"></script>
   <script src="glare.js"></script>
