@@ -38,3 +38,10 @@ evicted from visitors' caches.
 be added in the same stacking context without restructuring. The canvases are
 `pointer-events: none` and the ripple handler ignores anything inside `.controls`,
 so clicks reach whatever they should.
+
+- **Underwater effect** - similar to highlight rolloff
+
+- **Click ripples detached from video** - on top of everything,
+so clicking on buttons will trigger too
+
+- **Clicking on the video now trigger something new** - a gif
